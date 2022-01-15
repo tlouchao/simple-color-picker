@@ -1,16 +1,11 @@
-import React, {Component} from "react"
+import React  from "react"
 
-class PaletteSingle extends Component {
-    constructor(props){
-        super(props)
-    }
-    render(){
-        return (
-            <div style={this.props.style} className='palette-single'>
-                <span className='palette-single-hex-color'>#FF00FF</span>
-            </div>
-        )
-    }
+const PaletteSingle = (props) => {
+    return (
+        <div style={{backgroundColor: props.bgColor}} className='palette-single'>
+            <span className='palette-single-hex-color'>{props.bgColor}</span>
+        </div>
+    )
 }
 
 export default PaletteSingle

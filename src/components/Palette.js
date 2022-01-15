@@ -1,18 +1,40 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import PaletteSingle from "./PaletteSingle"
+import * as cutils from "../helpers/colorUtils"
 
-function Palette() {
-    // TODO: write rgbUtils function to replace hardcoded values
-    let paletteBgcolors = ['#FF3366', '#FF5F58', '#F3CA3E', '#2AC940', '#3399FF']
-    let paletteArr = []
-    for (let i = 0; i < 5; i++) {
-        let ps = <PaletteSingle key={'ps' + i} style={{backgroundColor: paletteBgcolors[i]}} />
-        paletteArr.push(ps)
+const Palette = () => {
+
+    // Define helper and event listener functions
+    const setRandomBgColor = (x) => { 
+        x = <PaletteSingle bgColor={cutils.rgbToHexString(cutils.randomRgb())} /> 
+        return x
     }
+
+    const handleKeyDown = (event) => {
+        console.log("Key pressed:" + event.code)
+        const isSpacePressed = event.code == "Space"
+        if (isSpacePressed){
+            setPaletteArr(paletteArr.map(setRandomBgColor))
+        }
+      }
+
+    // Set effects and state
+    const [paletteArr, setPaletteArr] = useState(Array.from({length: 5}, setRandomBgColor))
+
+    useEffect(() => {       
+        window.addEventListener('keydown', handleKeyDown);
+        
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        }
+    }, [])
+    
+    // Render Component
     return (
-    <div className='palette'>
-        {paletteArr}
-    </div>)
+        <div className='palette'>
+            {paletteArr}
+        </div>
+    )
 }
 
 export default Palette

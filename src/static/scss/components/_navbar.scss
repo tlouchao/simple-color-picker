@@ -1,0 +1,23 @@
+// Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;700&display=swap');
+
+.navbar {
+    background-color: #323232;
+    color: white;
+    font-family: 'Nunito';
+    font-weight: 300;
+    font-size: 24px;
+    text-align: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+
+    .gen-text {
+        padding: 1rem;
+        .gen-text-bold {
+            font-weight: 700;
+        }
+    }
+
+}

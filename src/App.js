@@ -1,10 +1,15 @@
 import React from "react"
+import Navbar from "./components/Navbar"
 
 function App() {
-    return (<div>
-        <h1>Hello, Universe!</h1>
-        <h2>Millions of Galaxies!</h2>
-    </div>)
+    return (
+        <div className='wrapper'>
+            <div className='app'>
+                <Navbar />
+                <div></div>
+            </div>
+        </div>
+    )
 }
 
 export default App

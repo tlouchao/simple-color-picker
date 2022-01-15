@@ -1,4 +1,7 @@
-@use 'reset/reset'; // Global CSS reset
+@use 'utils/variables';
+@use 'reset/reset';
 
 @use 'components/navbar';
-@use 'layout/app';
+@use 'components/palette';
+
+@use './app';

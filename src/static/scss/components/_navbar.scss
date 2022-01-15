@@ -1,22 +1,20 @@
-// Google Fonts
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;700&display=swap');
+@use '../utils/variables' as v;
 
 .navbar {
-    background-color: #323232;
+    background-color: v.$navbar-bgcolor;
     color: white;
-    font-family: 'Nunito';
-    font-weight: 300;
+    font-family: v.$nunito;
+    font-weight: v.$nunito-weight-light;
     font-size: 24px;
     text-align: left;
     display: flex;
     justify-content: center;
     align-items: center;
-    
 
     .gen-text {
         padding: 1rem;
         .gen-text-bold {
-            font-weight: 700;
+            font-weight: v.$nunito-weight-bold;
         }
     }
 

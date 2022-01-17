@@ -1,24 +1,23 @@
 import React, {useEffect, useState} from "react"
 import PaletteSingle from "./PaletteSingle"
-import * as cutils from "../helpers/colorUtils"
+import {randomRgbUint8} from "../helpers/colorUtils"
 
 const Palette = () => {
 
     // Define helper and event listener functions
     const setRandomBgColor = (x) => { 
-        x = <PaletteSingle bgColor={cutils.rgbToHexString(cutils.randomRgb())} /> 
+        x = <PaletteSingle bgColor={randomRgbUint8()} /> 
         return x
     }
 
     const handleKeyDown = (event) => {
         console.log("Key pressed:" + event.code)
-        const isSpacePressed = event.code == "Space"
-        if (isSpacePressed){
+        if (event.code == "Space"){
             setPaletteArr(paletteArr.map(setRandomBgColor))
         }
       }
 
-    // Set effects and state
+    // Lifecycle and state
     const [paletteArr, setPaletteArr] = useState(Array.from({length: 5}, setRandomBgColor))
 
     useEffect(() => {       
@@ -29,7 +28,7 @@ const Palette = () => {
         }
     }, [])
     
-    // Render Component
+    // Render component
     return (
         <div className='palette'>
             {paletteArr}

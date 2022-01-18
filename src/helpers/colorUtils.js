@@ -1,23 +1,28 @@
-export const randomRgbDouble = () => {
-    const rgb = Array.from({length: 3}, () => Math.random()); // 0 inclusive, 1 exclusive
+import {VEC3_LEN, UINT8_MAX} from '../common/constants'
+
+export const randomRgbNormalized = () => {
+    const rgb = Float64Array.from({length: VEC3_LEN}, () => Math.random());
     return rgb;
 }
 
 export const randomRgbUint8 = () => {
-    const rgb = randomRgbDouble().map(x => Math.floor(x * 256));
+    const rgb = Uint8ClampedArray.from({length: VEC3_LEN}, () => 
+        Math.floor(Math.random() * (UINT8_MAX + 1)))
     return rgb;
 }
 
-export const rgbToDouble = (rgb) => {
-    if (rgb.every(x => Number.isInteger(x))) {
-        rgb = rgb.map(x => x / 255.0)
+export const rgbToNormalized = (rgb) => {
+    if (rgb instanceof Uint8ClampedArray) {
+        const buf = Float64Array.from(rgb)
+        rgb = buf.map(x => x / UINT8_MAX)
     }
     return rgb;
 }
 
 export const rgbToUint8 = (rgb) => {
-    if (rgb.every(x => !(Number.isInteger(x)))) {
-        rgb = rgb.map(x => Math.floor(x * 256))
+    if (rgb instanceof Float64Array) {
+        const buf = rgb.map(x => x * (UINT8_MAX + 1))
+        rgb = Uint8ClampedArray.from(buf)
     }
     return rgb;
 }
@@ -30,6 +35,7 @@ export const rgbToHexString = (rgb) => {
 }
 
 export const rgbToGreyWeighted = (rgb) => {
-    rgb = rgbToDouble(rgb)
-    return (rgb[0] * .299) + (rgb[1] * .587) + (rgb[2] * .114)
+    rgb = rgbToNormalized(rgb)
+    const res = (rgb[0] * .299) + (rgb[1] * .587) + (rgb[2] * .114)
+    return parseFloat(res.toPrecision(15))
 }

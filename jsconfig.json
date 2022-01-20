@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+      "baseUrl": "./",
+      "target": "es6",
+      "paths": {
+        "common/*": ["src/common/*"],
+        "colorspace/*": ["src/colorspace/*"],
+      }
+    },
+    "exclude": ["node_modules"]
+}

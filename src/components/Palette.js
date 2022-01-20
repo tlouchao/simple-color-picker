@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react"
 import PaletteSingle from "./PaletteSingle"
-import {randomRgbUint8} from "../helpers/colorUtils"
+import {randomVec3Uint8} from "colorspace/vecUtils"
 
 const Palette = () => {
 
     // Define helper and event listener functions
     const setRandomBgColor = (x) => { 
-        x = <PaletteSingle bgColor={randomRgbUint8()} /> 
+        x = <PaletteSingle bgColor={randomVec3Uint8()} /> 
         return x
     }
 

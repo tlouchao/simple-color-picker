@@ -1,10 +1,10 @@
 import React  from "react"
-import {rgbToGreyWeighted, rgbToHexString} from "../helpers/colorUtils"
+import {vec3ToGreyWeighted, vec3ToHexString} from "../colorspace/vecUtils"
 
 const PaletteSingle = (props) => {
 
-    const hexColor = ((rgbToGreyWeighted(props.bgColor)) > .5) ? "black" : "white"
-    const hexString = rgbToHexString(props.bgColor)
+    const hexColor = ((vec3ToGreyWeighted(props.bgColor)) > .5) ? "black" : "white"
+    const hexString = vec3ToHexString(props.bgColor)
 
     return (
         <div style={{backgroundColor: hexString}} className='palette-single'>

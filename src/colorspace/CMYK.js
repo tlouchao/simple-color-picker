@@ -11,7 +11,6 @@ class CMYK extends Base {
     static get maxlen(){ return VEC4_LEN }
     static get maxval(){ return MAX_PCT }
     static get maxdeg(){ return null }
-
 }
 
 export default CMYK

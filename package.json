@@ -9,11 +9,6 @@
     "dev": "webpack-dev-server --config ./webpack.config.js",
     "build": "webpack --mode production"
   },
-  "jest": {
-    "testPathIgnorePatterns": [
-      "/node_modules/"
-    ]
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tlouchao/huehues.git"

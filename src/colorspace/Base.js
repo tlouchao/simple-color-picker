@@ -3,32 +3,36 @@ class Base {
     constructor(args) {
         if (new.target === Base) {
           throw new TypeError("abstract class Base")
-        }
-        if (args.length == 0){
-            this.vec = this.randomize()
         } else {
-            let validated = []
-            try { validated = this.validateArgs(args) } catch(err) { throw(err) }
-            this.vec = validated
+            this.vec = args
         }
     }
+
+    static get type(){throw(new TypeError("override this abstract method"))}
+    static get maxlen(){throw(new TypeError("override this abstract method"))}
+    static get maxval(){throw(new TypeError("override this abstract method"))}
+    static get maxdeg(){throw(new TypeError("override this abstract method"))}
     
     get vec() { return this.#vec }
 
-    set vec(newVec) { this.#vec = newVec }
-
-    toString(){ return this.vec.toString() }
+    set vec(newVec) {
+        if (newVec === undefined || newVec.length == 0){
+            this.#vec = this.randomize()
+        } else {
+            try { this.#vec = this._validateArgs(newVec) } catch(err) { throw(err) }
+        }
+    }
 
     // validate params; access static properties thru constructor
-    validateArgs(args){
+    _validateArgs(args){
 
+        const cstype = this.constructor.type
         const maxlen = this.constructor.maxlen
         const maxval = this.constructor.maxval
         const maxdeg = this.constructor.maxdeg
-        const cstype = this.constructor.type
 
         // Check for zero args
-        if (args.length == 0) {
+        if (args === undefined) {
             throw(new RangeError(`no arguments provided`))
         
         // Check for array
@@ -62,22 +66,36 @@ class Base {
             } else {
                 return Array.from(args) // mixed array
             }
+        } else {
+            throw(new Error("unknown validation args error"))
         }
     }
 
     randomize(){
-        return Arrays.from({length: this.constructor.maxlen}, 
-            x => Math.round(Math.random * this.constructor.maxval))
+        const cstype = this.constructor.type
+        if (cstype == "RGB" || cstype == "CMYK") {
+            return Array.from({ length: this.constructor.maxlen },
+                () => Math.round(Math.random() * this.constructor.maxval))    
+        } else if (cstype == "HSV" || cstype == "HSB") {
+            const hue = Math.round(Math.random() * this.constructor.maxdeg)
+            const sat = Math.round(Math.random() * this.constructor.maxval)
+            const vb = Math.round(Math.random() * this.constructor.maxval)
+            return Array.from([hue, sat, vb])
+        }
     }
 
     normalize(){
-        return Float64Array.from(this.vec, x => x / this.constructor.maxval)
+        const cstype = this.constructor.type
+        const buf = Float64Array.from(this.vec)
+        if (cstype == "RGB" || cstype == "CMYK") {
+            return buf.map(x => x / this.constructor.maxval)
+        } else if (cstype == "HSV" || cstype == "HSB") {
+            buf[0] = this.vec[0] / this.constructor.maxdeg
+            buf[1] = this.vec[1] / this.constructor.maxval
+            buf[2] = this.vec[2] / this.constructor.maxval
+            return buf
+        }
     }
-
-    static get type(){throw(new Error( "override this abstract method"))}
-    static get maxlen(){throw(new Error( "override this abstract method"))}
-    static get maxval(){throw(new Error( "override this abstract method"))}
-    static get maxdeg(){throw(new Error( "override this abstract method"))}
 }
 
 export default Base

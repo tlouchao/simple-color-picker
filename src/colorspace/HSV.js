@@ -1,23 +1,16 @@
-import { VEC3_MAX, PERCENT_MAX } from "common/constants"
-import Colorspace from "./Colorspace"
+import { VEC3_LEN, MAX_PCT, MAX_DEG } from "common/constants"
+import Base from "./Base"
 
-class HSV extends Colorspace {
+class HSV extends Base {
     #vec
     constructor(...args) {
         super(args)
     }
 
-    sanitizeArgs(args){
-        return this._sanitizeArgsInner(PERCENT_MAX, VEC3_MAX, args)
-    }
-
-    randomize() {
-        return this._randomizeInner(PERCENT_MAX, VEC3_MAX)
-    }
-
-    normalize(){
-        return this._normalizeInner(PERCENT_MAX)
-    }
+    static get type(){ return "HSV" }
+    static get maxlen(){ return VEC3_LEN }
+    static get maxval(){ return MAX_PCT }
+    static get maxdeg(){ return MAX_DEG }
 }
 
 export default HSV

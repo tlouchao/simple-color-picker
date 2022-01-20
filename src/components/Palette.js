@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
 import PaletteSingle from "./PaletteSingle"
-import {randomVec3Uint8} from "colorspace/vecUtils"
+import {randomVec3Uint8} from "colorspace/utils"
 
 const Palette = () => {
 

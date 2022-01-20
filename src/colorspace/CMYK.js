@@ -1,23 +1,17 @@
-import { VEC4_MAX, PERCENT_MAX } from "common/constants"
-import Colorspace from "./Colorspace"
+import { VEC4_LEN, MAX_PCT } from "common/constants"
+import Base from "./Base"
 
-class CMYK extends Colorspace {
+class CMYK extends Base {
     #vec
     constructor(...args) {
         super(args)
     }
 
-    validateArgs(args){
-        return this._validateArgsInner(PERCENT_MAX, VEC4_MAX, args)
-    }
+    static get type(){ return "CMYK" }
+    static get maxlen(){ return VEC4_LEN }
+    static get maxval(){ return MAX_PCT }
+    static get maxdeg(){ return null }
 
-    randomize() {
-        return this._randomizeInner(PERCENT_MAX, VEC4_MAX)
-    }
-
-    normalize(){
-        return this._normalizeInner(PERCENT_MAX)
-    }
 }
 
 export default CMYK

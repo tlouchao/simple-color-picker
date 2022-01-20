@@ -1,5 +1,5 @@
 import React  from "react"
-import {vec3ToGreyWeighted, vec3ToHexString} from "../colorspace/vecUtils"
+import {vec3ToGreyWeighted, vec3ToHexString} from "../colorspace/utils"
 
 const PaletteSingle = (props) => {
 

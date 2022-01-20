@@ -1,23 +1,16 @@
-import { VEC3_MAX, UINT8_MAX } from "common/constants"
-import Colorspace from "./Colorspace"
+import { VEC3_LEN, MAX_UINT8 } from "common/constants"
+import Base from "./Base"
 
-class RGB extends Colorspace {
+class RGB extends Base {
     #vec
     constructor(...args) {
         super(args)
     }
 
-    validateArgs(args){
-        return this._validateArgsInner(UINT8_MAX, VEC3_MAX, args)
-    }
-
-    randomize() {
-        return this._randomizeInner(UINT8_MAX, VEC3_MAX)
-    }
-
-    normalize(){
-        return this._normalizeInner(UINT8_MAX)
-    }
+    static get type(){ return "RGB" }
+    static get maxlen(){ return VEC3_LEN }
+    static get maxval(){ return MAX_UINT8 }
+    static get maxdeg(){ return null }
 }
 
 export default RGB

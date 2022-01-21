@@ -1,5 +1,5 @@
 import Base from "colorspace/Base"
-import { RGB, CMYK, HSV, HSB } from "colorspace/Colorspace"
+import { RGB, CMYK, HSV, HSB } from "colorspace/colorspace"
 import { VEC3_LEN, MAX_PCT, MAX_UINT8, MAX_DEG } from "common/constants"
 
 describe("Do not instantiate abstract class Base", () => {
@@ -266,7 +266,7 @@ describe("Randomize when no args provided in constructor", () => {
 
     test("RGB random values are in range", () => {
         const r1 = new RGB()
-        console.log("Randomized RGB vec: " + r1.vec)
+        // console.log("Randomized RGB vec: " + r1.vec)
         expect(r1.vec[0]).toBeGreaterThanOrEqual(0)
         expect(r1.vec[0]).toBeLessThanOrEqual(RGB.maxval)
         expect(r1.vec.length).toBe(RGB.maxlen)
@@ -274,7 +274,7 @@ describe("Randomize when no args provided in constructor", () => {
 
     test("HSV random values are in range", () => {
         const h1 = new HSV() 
-        console.log("Randomized HSV vec: " + h1.vec)
+        // console.log("Randomized HSV vec: " + h1.vec)
         expect(h1.vec[0]).toBeGreaterThanOrEqual(0)
         expect(h1.vec[0]).toBeLessThanOrEqual(HSV.maxdeg)
         expect(h1.vec[1]).toBeGreaterThanOrEqual(0)
@@ -304,4 +304,32 @@ describe("Normalize RGB and HSV vectors", () => {
             expect((hn1[i])).toBeCloseTo(hnorm[i], 2)
         })
     }
+})
+
+describe("RGB luminance", () => {
+    const black_gs = 0
+    const brgb = new RGB(0, 0, 0)
+    test(`${brgb} luminance value should equal ${black_gs}`, () => {
+        expect(brgb.getLuminance()).toBeCloseTo(black_gs, 15)
+    })
+    const white_gs = 1
+    const wrgb = new RGB(255, 255, 255)
+    test(`${wrgb} luminance value should equal ${white_gs}`, () => {
+        expect(wrgb.getLuminance()).toBeCloseTo(white_gs, 15)
+    })
+    const orange_gs = (1 * .299) + (.5 * .587) + (0 * .114)
+    const orgb = new RGB(255, 128, 0)
+    test(`${orgb} luminance value should equal ${orange_gs}`, () => {
+        expect(orgb.getLuminance()).toBeCloseTo(orange_gs, 2)
+    })
+})
+
+describe("RGB to string and hex string", () => {
+    const r1 = new RGB([255, 0, 255])
+    test("to string", () => {
+        expect(r1.toString()).toEqual(`${RGB.type}: ${r1.vec}`)
+    })
+    test("hex string", () => {
+        expect(r1.getHexString()).toEqual("#FF00FF")
+    })
 })

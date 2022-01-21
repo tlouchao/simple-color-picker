@@ -3,12 +3,9 @@ import {vec3ToGreyWeighted, vec3ToHexString} from "../colorspace/utils"
 
 const PaletteSingle = (props) => {
 
-    const hexColor = ((vec3ToGreyWeighted(props.bgColor)) > .5) ? "black" : "white"
-    const hexString = vec3ToHexString(props.bgColor)
-
     return (
-        <div style={{backgroundColor: hexString}} className='palette-single'>
-            <span style={{color: hexColor}} className='palette-single-hex-color'>{hexString}</span>
+        <div id={props.id} style={{backgroundColor: props.bgColor}} className='palette-single'>
+            <span style={{color: props.lbColor}} className='palette-single-hex-color'>{props.bgColor}</span>
         </div>
     )
 }

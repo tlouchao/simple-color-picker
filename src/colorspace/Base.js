@@ -23,6 +23,10 @@ class Base {
         }
     }
 
+    toString() {
+        return `${this.constructor.type}: ${this.vec}`
+    }
+
     // validate params; access static properties thru constructor
     _validateArgs(args){
 
@@ -68,6 +72,14 @@ class Base {
             }
         } else {
             throw(new Error("unknown validation args error"))
+        }
+    }
+
+    set reset(fn){
+        if (Object.getOwnPropertyNames(this).includes(fn.name)){
+            this.#vec = fn()
+        } else {
+            throw new TypeError("not a class method")
         }
     }
 

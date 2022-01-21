@@ -1,28 +1,21 @@
 import React, {useEffect, useState} from "react"
 import PaletteSingle from "./PaletteSingle"
-import {randomVec3Uint8} from "colorspace/utils"
+import RGB from "colorspace/RGB"
 
 const Palette = () => {
 
-    // Define helper and event listener functions
-    const setRandomBgColor = (x) => { 
-        x = <PaletteSingle bgColor={randomVec3Uint8()} /> 
-        return x
-    }
+    // Lifecycle and state
+    const [RGBArr, setRGBArr] = useState(Array.from({length: 5}, () => new RGB()))
 
     const handleKeyDown = (event) => {
         console.log("Key pressed:" + event.code)
         if (event.code == "Space"){
-            setPaletteArr(paletteArr.map(setRandomBgColor))
+            setRGBArr(RGBArr.map(() => new RGB()))
         }
-      }
-
-    // Lifecycle and state
-    const [paletteArr, setPaletteArr] = useState(Array.from({length: 5}, setRandomBgColor))
+    }
 
     useEffect(() => {       
-        window.addEventListener('keydown', handleKeyDown);
-        
+        window.addEventListener('keydown', handleKeyDown);     
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         }
@@ -31,7 +24,11 @@ const Palette = () => {
     // Render component
     return (
         <div className='palette'>
-            {paletteArr}
+            {RGBArr.map((rgb, idx) => 
+                <PaletteSingle id={"ps" + idx}
+                bgColor={rgb.getHexString()}
+                lbColor={(rgb.getLuminance()) > .5 ? "black" : "white"} />
+            )}
         </div>
     )
 }

@@ -26,16 +26,3 @@ export const vec3ToUint8 = (vec3) => {
     }
     return vec3;
 }
-
-export const vec3ToHexString = (vec3) => {
-    let hexStr = '#'
-    vec3 = vec3ToUint8(vec3)
-    vec3.forEach((x) => hexStr = hexStr.concat(x.toString(16).padStart(2, '0').toUpperCase()))
-    return hexStr
-}
-
-export const vec3ToGreyWeighted = (vec3) => {
-    vec3 = vec3ToNormalized(vec3)
-    const res = (vec3[0] * .299) + (vec3[1] * .587) + (vec3[2] * .114)
-    return parseFloat(res.toPrecision(15))
-}

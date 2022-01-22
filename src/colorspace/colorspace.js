@@ -1,6 +1,7 @@
 import RGB from "./RGB"
 import CMYK from "./CMYK"
 import HSV from "./HSV"
-import HSB from "./HSB"
+import HSL from "./HSL"
+import Type from "./Type"
 
-module.exports = { RGB, CMYK, HSV, HSB }
+module.exports = { Type, RGB, CMYK, HSV, HSL }

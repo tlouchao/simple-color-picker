@@ -1,16 +1,19 @@
 import { VEC3_LEN, MAX_UINT8 } from "common/constants"
 import Base from "./Base"
+import Type from "./Type"
 
 class RGB extends Base {
     #vec
-    constructor(...args) {
+    constructor(args) {
         super(args)
     }
 
-    static get type(){ return "RGB" }
+    static get type(){ return Type.RGB }
     static get maxlen(){ return VEC3_LEN }
     static get maxval(){ return MAX_UINT8 }
     static get maxdeg(){ return null }
+
+    static from(that){throw(new TypeError("override this method"))}
 
     getHexString(){
         let hexStr = '#'

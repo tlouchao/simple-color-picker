@@ -1,7 +1,5 @@
-import RGB from "./RGB"
-import CMYK from "./CMYK"
-import HSV from "./HSV"
-import HSL from "./HSL"
-import Type from "./Type"
-
-module.exports = { Type, RGB, CMYK, HSV, HSL }
+export { default as RGB } from "./RGB";
+export { default as CMYK } from "./CMYK"
+export { default as HSV } from "./HSV"
+export { default as HSL } from "./HSL"
+export { default as Type } from "./Type"

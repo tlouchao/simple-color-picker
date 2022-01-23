@@ -16,6 +16,7 @@ devServer: {
 },
 resolve: {
   alias: {
+    canvas: path.resolve(__dirname, '/src/canvas'),
     common: path.resolve(__dirname, '/src/common'),
     colorspace: path.resolve(__dirname, '/src/colorspace')
   },

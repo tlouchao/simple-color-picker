@@ -1,8 +1,16 @@
 import React, {useEffect, useState} from "react"
-import RGB from "colorspace/RGB"
+import Type from "colorspace/Type"
+import * as cjs from "canvas/canvas"
+import {RGB, HSV} from "colorspace/colorspace"
 
 const ColorPicker = () => {
     
+    const [selectedColor, useSelectedColor] = useState(new RGB({"isInt": true, "vec": [255, 0, 0]}))
+
+    useEffect(() => {
+        cjs.drawCanvasBg(HSV.from(selectedColor)[0]) // get the hue channel
+      });
+
     // Render component
     return (
         <div id='color-picker-wrapper'>
@@ -10,16 +18,15 @@ const ColorPicker = () => {
                 <div id='header'><h1>Color Picker</h1></div>
                 <div id='canvas-wrapper'>
                     <div id='square'></div>
-                    <div id='canvas'></div>
+                    <canvas id='canvas' width='400' height='200'></canvas>
                 </div>
                 <div id='conversions-wrapper'>
-                    <div className='ce-0'><input id='slider' type='range'></input></div>
-                    <div id='hex' className='ce-1 txt-format'><h2>Hex</h2></div>
-                    <div id='conversions' className='ce-2'>
-                        <div id='RGB' className='txt-format'><h2>RGB</h2></div>
-                        <div id='CMYK' className='txt-format'><h2>CMYK</h2></div>
-                        <div id='HSV' className='txt-format'><h2>HSV</h2></div>
-                        <div id='HSL' className='txt-format'><h2>HSL</h2></div>
+                    <div><input id='slider' type='range'></input></div>
+                    <div id='hex' className='txt-format'><h2>Hex</h2></div>
+                    <div id='conversions'>
+                        {Object.keys(Type).map(k => 
+                        <div id={k} className='cvelem txt-format'><h2>{k}</h2></div>
+                        )}
                     </div>
                 </div>
             </div>

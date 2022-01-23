@@ -1,7 +1,7 @@
 {
-  "name": "huehues",
+  "name": "simple-color-picker",
   "version": "1.0.0",
-  "description": "Happy Color Picker",
+  "description": "Simple Color Picker",
   "main": "index.js",
   "private": true,
   "scripts": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tlouchao/huehues.git"
+    "url": "git+https://github.com/tlouchao/simple-color-picker.git"
   },
   "author": "",
   "license": "ISC",

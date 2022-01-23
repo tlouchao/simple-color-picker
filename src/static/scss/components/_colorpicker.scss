@@ -1,0 +1,72 @@
+@use '../utils/variables' as v;
+
+@mixin border-group {
+    border-radius: 8px;
+    border: 1px solid v.$border-color;
+}
+$txtbox-padding: .5rem;
+$txtbox-height: 40px;
+$canvas-sqlen: 200px;
+
+#color-picker-wrapper {
+    h1 {
+        font-size: 18px;
+    }
+    h2 {
+        font-size: 12px;
+    }
+    background-color: v.$colorpicker-bgcolor;
+    color: white;
+    font-family: v.$nunito;
+    font-weight: v.$nunito-weight-light;
+    text-align: left;
+    display: grid;
+    height: 100%;
+    margin-left: 5%;
+    padding: 2rem;
+    #header {
+        padding: $txtbox-padding;
+    }
+    #color-picker {
+        background-color: v.$colorpicker-bgcolor;
+        display: grid;
+        grid-template-rows: $txtbox-height $canvas-sqlen auto;
+        width: 640px;
+        height: max-content;
+        @include border-group();
+        #canvas-wrapper {
+            display: grid;
+            grid-template-columns: 200px auto;
+            #square {
+                background-color: magenta;
+            }
+            #canvas {
+                background-color: cyan;
+            }
+        }
+        #conversions-wrapper{
+            padding: $txtbox-padding * 2;
+            display: grid;
+            grid-template-rows: repeat(3, $txtbox-height);
+            grid-gap: $txtbox-padding;
+            height: max-content;
+            .txt-format {
+                padding: $txtbox-padding;
+                @include border-group();
+            }
+            #slider {
+                width: 99.5%;
+            }
+            #hex { 
+                display: flex;
+                justify-content: center;
+            }
+            #conversions {
+                display: flex;
+                justify-content: space-evenly;
+            }
+
+        }
+        
+    }
+}

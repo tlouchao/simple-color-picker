@@ -1,8 +1,10 @@
+@use './utils/variables' as v;
+
 .app {
-    display: grid;
-    grid-gap: 0 0;
-    grid-template-areas: "navbar palette";
-    grid-template-columns: minmax(180px, 1fr) 5fr;
+    background-color: v.$bg-color;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
     width: 100vw;
     height: 100vh;
 }

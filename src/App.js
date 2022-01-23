@@ -1,13 +1,11 @@
 import React from "react"
-import Navbar from "./components/Navbar"
-import Palette from "./components/Palette"
+import ColorPicker from "./components/ColorPicker"
 
 const App = () => {
     return (
         <div className='wrapper'>
             <div className='app'>
-                <Navbar />
-                <Palette />
+                <ColorPicker />
             </div>
         </div>
     )

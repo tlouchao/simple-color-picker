@@ -1,9 +1,14 @@
 // Google Fonts
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;700&display=swap');
 
-$bg-color: #303030;
+// Top Level
+$bgcolor: #303030;
 $colorpicker-bgcolor: #242424;
 $border-color: #404040;
 $nunito: 'Nunito';
 $nunito-weight-light: 300;
 $nunito-weight-bold: 700;
+$transparent-color: rgba(0, 0, 0, 0);
+
+// Slider
+$slider-height: 8px;

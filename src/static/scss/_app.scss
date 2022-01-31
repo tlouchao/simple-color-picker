@@ -1,7 +1,7 @@
 @use './utils/variables' as v;
 
 .app {
-    background-color: v.$bg-color;
+    background-color: v.$bgcolor;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;

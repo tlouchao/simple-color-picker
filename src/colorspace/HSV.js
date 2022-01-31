@@ -15,7 +15,7 @@ class HSV extends Base {
 
     /* https://www.rapidtables.com/convert/color/rgb-to-hsv.html */
     static from(that){
-        if (that instanceof Base && that.constructor.type == Type.RGB){
+        if (that.constructor.type == Type.RGB){
             const rnorm = that.normalize()
             const cmax = Math.max(rnorm[0], rnorm[1], rnorm[2])
             const cmin = Math.min(rnorm[0], rnorm[1], rnorm[2])

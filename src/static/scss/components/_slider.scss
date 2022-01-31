@@ -1,0 +1,35 @@
+@use "sass:math";
+@use "../utils/variables" as v;
+
+@mixin slider-linear-gradient(){
+    $gparams: 90deg;
+    $step: 6;
+    $gdeg: math.div(360, $step);
+    $gpct: math.div(100%, $step);
+    @for $i from 0 to $step + 1 {
+        $gparams: append($gparams, hsl($gdeg * $i, 100%, 50%) $gpct * $i, comma);
+    }
+    background: linear-gradient($gparams);
+}
+
+#slider {
+    -webkit-appearance: none; // include in both parent & child
+    border-radius: 4px; // include in both parent & child
+    width: 100%;
+    
+    &::-webkit-slider-runnable-track {
+        border-radius: 4px;
+        height: v.$slider-height;
+        @include slider-linear-gradient();
+    }
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        background: v.$transparent-color;
+        border: 2px solid white;
+        border-radius: 50%;
+        height: v.$slider-height * 2;
+        width: v.$slider-height * 2;
+        margin-top: math.div(v.$slider-height, -2);
+        cursor: pointer;
+    }
+}

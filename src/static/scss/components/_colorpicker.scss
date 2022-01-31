@@ -57,9 +57,6 @@ $canvas-sqlen: 200px;
                 padding: calc($txtbox-padding / 2) $txtbox-padding;
                 @include border-group();
             }
-            #slider {
-                width: 99.5%;
-            }
             #hex { 
                 display: flex;
                 justify-content: center;

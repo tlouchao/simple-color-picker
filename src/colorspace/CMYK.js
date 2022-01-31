@@ -15,7 +15,7 @@ class CMYK extends Base {
 
     /* https://www.rapidtables.com/convert/color/rgb-to-cmyk.html */
     static from(that){
-        if (that instanceof Base && that.constructor.type == Type.RGB){
+        if (that.constructor.type == Type.RGB){
             const rnorm = that.normalize()
             const k = 1 - Math.max(rnorm[0], rnorm[1], rnorm[2])
             const c = (1 - rnorm[0] - k) / (1 - k)

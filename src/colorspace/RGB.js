@@ -12,7 +12,12 @@ class RGB extends Base {
     static get maxval(){ return MAX_UINT8 }
     static get maxdeg(){ return null }
 
+    toString() {
+        return `${this.vec[0]}, ${this.vec[1]}, ${this.vec[2]}`
+    }
+
     /*https://www.rapidtables.com/convert/color/hsl-to-rgb.html*/
+    /*https://www.rapidtables.com/convert/color/hsv-to-rgb.html*/
     static from(that){
         if (that instanceof Type['HSL'] || that instanceof Type['HSV']){
             const hue = that.vec[0]
@@ -58,7 +63,7 @@ class RGB extends Base {
         }
     }
 
-    getHexString(){
+    toHexString(){
         let hexStr = '#'
         this.vec.forEach((x) => hexStr = hexStr.concat(x.toString(16).padStart(2, '0').toUpperCase()))
         return hexStr

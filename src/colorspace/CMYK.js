@@ -12,6 +12,12 @@ class CMYK extends Base {
     static get maxval(){ return MAX_PCT }
     static get maxdeg(){ return null }
 
+    toString() {
+        let cnorm = this.normalize()
+        cnorm = cnorm.map(x => Math.round(x * 100))
+        return `${cnorm[0]}%, ${cnorm[1]}%, ${cnorm[2]}%, ${cnorm[3]}%`
+    }
+
     /* https://www.rapidtables.com/convert/color/rgb-to-cmyk.html */
     static from(that){
         if (that instanceof Type['RGB']){

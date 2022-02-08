@@ -1,6 +1,6 @@
 import { RGB, CMYK, HSV, HSL } from "colorspace/colorspace"
-import * as constants from "common/constants"
 import Base from "colorspace/Base"
+import * as constants from "common/constants"
 
 describe("Do not instantiate abstract class Base", () => {
 
@@ -181,15 +181,15 @@ describe("HSV and HSL constructor incorrect args object format", () => {
 describe("RGB and CMYK constructor incorrect number of args", () => {
     
     test(`RGB Array`, () => {
-        expect(() => new RGB({"isInt": true, "vec":[1, 2]})).toThrow(RangeError)
-        expect(() => new RGB({"isInt": true, "vec":[4, 5, 6, 7]})).toThrow(
+        expect(() => new RGB([1, 2, 3, 4])).toThrow(RangeError)
+        expect(() => new RGB(5, 6, 7, 8)).toThrow(
             `please provide a vector with length ${RGB.maxlen}`
         )
     })
 
     test(`CMYK Array`, () => {
-        expect(() => new CMYK({"isInt": true, "vec":[1, 2, 3]})).toThrow(RangeError)
-        expect(() => new CMYK({"isInt": true, "vec":[4, 5]})).toThrow(
+        expect(() => new CMYK([1, 2, 3, 4, 5])).toThrow(RangeError)
+        expect(() => new CMYK(6, 7, 8, 9, 10)).toThrow(
             `please provide a vector with length ${CMYK.maxlen}`
         )
     })
@@ -198,15 +198,15 @@ describe("RGB and CMYK constructor incorrect number of args", () => {
 describe("HSV and HSL constructor incorrect number of args", () => {
     
     test(`HSV Array`, () => {
-        expect(() => new HSV({"isInt": true, "vec":[1, 2]})).toThrow(RangeError)
-        expect(() => new HSV({"isInt": true, "vec":[4, 5, 6, 7]})).toThrow(
+        expect(() => new HSV([1, 2, 3, 4])).toThrow(RangeError)
+        expect(() => new HSV(5, 6, 7, 8)).toThrow(
             `please provide a vector with length ${HSV.maxlen}`
         )
     })
 
     test(`HSL Array`, () => {
-        expect(() => new HSL({"isInt": true, "vec":[1, 2]})).toThrow(RangeError)
-        expect(() => new HSL({"isInt": true, "vec":[4, 5, 6, 7]})).toThrow(
+        expect(() => new HSL([1, 2, 3, 4])).toThrow(RangeError)
+        expect(() => new HSL(5, 6, 7, 8)).toThrow(
             `please provide a vector with length ${HSL.maxlen}`
         )
     })
@@ -282,6 +282,25 @@ describe("HSV and HSL constructor bad values args", () => {
         expect(() => new HSL({"isInt": false, "vec":[0, 1, notnorm]})).toThrow(
             `${[0, 1, notnorm]} does not contain normalized values from 0.0-${HSV.maxnm} inclusive`
         )
+    })
+})
+
+describe("To string", () => {
+    const r1 = new RGB([100, 150, 200])
+    const c1 = new CMYK([100, 0, 25, 75])
+    const v1 = new HSV([360, 100, 0])
+    const l1 = new HSL([180, 50, 50])
+    test("RGB", () => {
+        expect(r1.toString()).toEqual("100, 150, 200")
+    })
+    test("CMYK", () => {
+        expect(c1.toString()).toEqual("100%, 0%, 25%, 75%")
+    })
+    test("HSV", () => {
+        expect(v1.toString()).toEqual("360\xB0, 100%, 0%")
+    })
+    test("HSL", () => {
+        expect(l1.toString()).toEqual("180\xB0, 50%, 50%")
     })
 })
 
@@ -411,12 +430,9 @@ describe("RGB luminance", () => {
     })
 })
 
-describe("RGB to string and hex string", () => {
+describe("RGB hex string", () => {
     const r1 = new RGB(255, 0, 255)
-    test("to string", () => {
-        expect(r1.toString()).toEqual(`${RGB.type}: ${r1.vec}`)
-    })
     test("hex string", () => {
-        expect(r1.getHexString()).toEqual("#FF00FF")
+        expect(r1.toHexString()).toEqual("#FF00FF")
     })
 })

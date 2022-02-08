@@ -24,23 +24,21 @@ class Base {
     // Getter (no setter)
     get vec() { return this.#vec }
 
-    // Print string
-    toString() {
-        return `${this.constructor.type}: ${this.vec}`
-    }
-
     _validateArgs(args){  
 
         // Handle spread operator
         if (args.length == this.constructor.maxlen) {
             try { return this._validateArgsInner(args, true) } catch (err) { throw (err) }
 
+        } else if (args.length != 1) {
+            throw(new RangeError(`${args} please provide a vector with length ${this.constructor.maxlen}`))
+            
         } else {
             // Get nested argument
             args = args[0]
 
             // Handle array
-            if (args.length == this.constructor.maxlen) {
+            if (Array.isArray(args)) {
                 try { return this._validateArgsInner(args, true) } catch (err) { throw (err) }
 
             // Handle key value pairs
@@ -122,14 +120,6 @@ class Base {
                 throw(new Error("unknown validation args error"))
             }
             return res
-        }
-    }
-
-    set reset(fn){
-        if (Object.getOwnPropertyNames(this).includes(fn.name)){
-            this.#vec = fn()
-        } else {
-            throw new TypeError("not a class method")
         }
     }
 

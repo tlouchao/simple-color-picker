@@ -12,6 +12,12 @@ class HSV extends Base {
     static get maxval(){ return MAX_PCT }
     static get maxdeg(){ return MAX_DEG }
 
+    toString() {
+        let hnorm = this.normalize()
+        hnorm = hnorm.map(x => Math.round(x * 100))
+        return `${this.vec[0]}\xB0, ${hnorm[1]}%, ${hnorm[2]}%`
+    }
+
     /* https://www.rapidtables.com/convert/color/rgb-to-hsv.html */
     static from(that){
         if (that instanceof Type['RGB']){

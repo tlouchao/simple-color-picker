@@ -63,7 +63,10 @@ $canvas-sqlen: 200px;
             }
             #hex { 
                 display: flex;
-                justify-content: center;
+                flex-direction: column;
+                h2 {
+                    text-align: center;
+                }
             }
             #conversions {
                 display: flex;
@@ -73,6 +76,7 @@ $canvas-sqlen: 200px;
                 .cvelem {
                     display: flex;
                     flex: 1;
+                    flex-direction: column;
                 }
             }
 

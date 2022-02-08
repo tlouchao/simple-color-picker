@@ -1,5 +1,5 @@
 import { MAX_NM } from 'common/constants'
-import Type from './Type'
+import { Type } from './colorspace'
 
 class Base {
     #vec
@@ -14,7 +14,6 @@ class Base {
         }
     }
 
-    static get type(){throw(new TypeError("override this abstract method"))}
     static get maxlen(){throw(new TypeError("override this abstract method"))}
     static get maxval(){throw(new TypeError("override this abstract method"))}
     static get maxdeg(){throw(new TypeError("override this abstract method"))}
@@ -31,10 +30,11 @@ class Base {
     }
 
     _validateArgs(args){  
+
         // Handle spread operator
         if (args.length == this.constructor.maxlen) {
-            console.log(args)
             try { return this._validateArgsInner(args, true) } catch (err) { throw (err) }
+
         } else {
             // Get nested argument
             args = args[0]
@@ -57,7 +57,6 @@ class Base {
 
     _validateArgsInner(arr, isInt){
 
-        const cstype = this.constructor.type
         const maxlen = this.constructor.maxlen
         const maxval = this.constructor.maxval
         const maxdeg = this.constructor.maxdeg
@@ -74,7 +73,7 @@ class Base {
         } else {
             let res = []
             // Filter bad RGB/CMYK values
-            if (cstype == Type.RGB || cstype == Type.CMYK) {
+            if (this instanceof Type['RGB'] || this instanceof Type['CMYK']) {
                 let filtered = []
                 if (isInt){
                     // handle integer values
@@ -95,7 +94,7 @@ class Base {
                 }
 
             // Filter bad HSV/HSL values
-            } else if (cstype == Type.HSV || cstype == Type.HSL) {
+            } else if (this instanceof Type['HSV'] || this instanceof Type['HSL']) {
                 if (isInt){
                     // handle integer values
                     const [hue, sat, vb] = arr
@@ -135,11 +134,10 @@ class Base {
     }
 
     randomize(){
-        const cstype = this.constructor.type
-        if (cstype == Type.RGB || cstype == Type.CMYK) {
+        if (this instanceof Type['RGB'] || this instanceof Type['CMYK']) {
             return Array.from({ length: this.constructor.maxlen },
                 () => Math.round(Math.random() * this.constructor.maxval))    
-        } else if (cstype == Type.HSV || cstype == Type.HSL) {
+        } else if (this instanceof Type['HSV'] || this instanceof Type['HSL']) {
             const hue = Math.round(Math.random() * this.constructor.maxdeg)
             const sat = Math.round(Math.random() * this.constructor.maxval)
             const vb = Math.round(Math.random() * this.constructor.maxval)
@@ -148,11 +146,10 @@ class Base {
     }
 
     normalize(){
-        const cstype = this.constructor.type
         const buf = Float64Array.from(this.vec)
-        if (cstype == Type.RGB || cstype == Type.CMYK) {
+        if (this instanceof Type['RGB'] || this instanceof Type['CMYK']) {
             return buf.map(x => x / this.constructor.maxval)
-        } else if (cstype == Type.HSV || cstype == Type.HSL) {
+        } else if (this instanceof Type['HSV'] || this instanceof Type['HSL']) {
             buf[0] = this.vec[0] / this.constructor.maxdeg
             buf[1] = this.vec[1] / this.constructor.maxval
             buf[2] = this.vec[2] / this.constructor.maxval

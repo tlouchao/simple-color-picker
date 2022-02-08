@@ -15,6 +15,10 @@ $canvas-sqlen: 200px;
     h2 {
         font-size: 12px;
     }
+    p {
+        font-size: 10px;
+        text-align: center;
+    }
     background-color: v.$colorpicker-bgcolor;
     color: white;
     font-family: v.$nunito;
@@ -69,7 +73,6 @@ $canvas-sqlen: 200px;
                 .cvelem {
                     display: flex;
                     flex: 1;
-
                 }
             }
 

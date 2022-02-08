@@ -1,6 +1,6 @@
-import Base from "colorspace/Base"
 import { RGB, CMYK, HSV, HSL } from "colorspace/colorspace"
 import * as constants from "common/constants"
+import Base from "colorspace/Base"
 
 describe("Do not instantiate abstract class Base", () => {
 
@@ -10,8 +10,6 @@ describe("Do not instantiate abstract class Base", () => {
     })
 
     test("static methods", () => {
-        expect(() => Base.type).toThrow(TypeError)
-        expect(() => Base.type).toThrow("override this abstract method")
         expect(() => Base.maxlen).toThrow("override this abstract method")
         expect(() => Base.maxval).toThrow("override this abstract method")
         expect(() => Base.maxdeg).toThrow("override this abstract method")
@@ -288,18 +286,15 @@ describe("HSV and HSL constructor bad values args", () => {
 })
 
 describe("RGB Getters", () => {
-    const r1 = new RGB({"isInt": true, "vec": [100, 150, 200]})
+    const r1 = new RGB([100, 150, 200])
     test("get private vec", () => {
         // console.log(r1.vec)
         expect(r1.vec).toEqual([100, 150, 200])
     })
-    const r2 = new RGB({"isInt": false, "vec": [1, 0, 0]})
+    const r2 = new RGB({isInt: false, vec: [1, 0, 0]})
     test("get private vec (normalized to int conversion)", () => {
         // console.log(r2.vec)
         expect(r2.vec).toEqual([255, 0, 0])
-    })
-    test("static type", () => {
-        expect(RGB.type).toBe("RGB")
     })
     test("static max len", () => {
         expect(RGB.maxlen).toBe(constants.VEC3_LEN)
@@ -313,18 +308,15 @@ describe("RGB Getters", () => {
 })
 
 describe("HSV Getters", () => {
-    const h1 = new HSV({"isInt": true, "vec": [360, 100, 0]})
+    const h1 = new HSV([360, 100, 0])
     test("get private vec", () => {
         // console.log(h1.vec)
         expect(h1.vec).toEqual([360, 100, 0])
     })
-    const h2 = new HSV({"isInt": false, "vec": [1, 1, 0]})
+    const h2 = new HSV({isInt: false, vec: [1, 1, 0]})
     test("get private vec (normalized to int conversion)", () => {
         // console.log(h2.vec)
         expect(h2.vec).toEqual([360, 100, 0])
-    })
-    test("static type", () => {
-        expect(HSV.type).toBe("HSV")
     })
     test("static max len", () => {
         expect(HSV.maxlen).toBe(constants.VEC3_LEN)
@@ -382,7 +374,7 @@ describe("Normalize RGB and HSV vectors", () => {
 
     const rvec = [255, 128, 0]
     const rnorm = [1, .5, 0]
-    const r1 = new RGB({"isInt": true, "vec": rvec})
+    const r1 = new RGB(rvec)
     const rn1 = r1.normalize()
     for(let i = 0; i < rvec.length; i++) {
         test(`RGB: ${rn1[i]} should be equal/approx equal ${rnorm[i]}`, () => {
@@ -392,7 +384,7 @@ describe("Normalize RGB and HSV vectors", () => {
 
     const hvec = [180, 75, 25]
     const hnorm = [.5, .75, .25]
-    const h1 = new HSV({"isInt": true, "vec": hvec})
+    const h1 = new HSV(hvec)
     const hn1 = h1.normalize()
     for(let i = 0; i < hvec.length; i++) {
         test(`HSV: ${hn1[i]} should be equal/approx equal ${hnorm[i]}`, () => {
@@ -403,24 +395,24 @@ describe("Normalize RGB and HSV vectors", () => {
 
 describe("RGB luminance", () => {
     const black_gs = 0
-    const brgb = new RGB({"isInt": true, "vec": [0, 0, 0]})
+    const brgb = new RGB(0, 0, 0)
     test(`${brgb} luminance value should equal ${black_gs}`, () => {
         expect(brgb.getLuminance()).toBeCloseTo(black_gs, 15)
     })
     const white_gs = 1
-    const wrgb = new RGB({"isInt": true, "vec": [255, 255, 255]})
+    const wrgb = new RGB(255, 255, 255)
     test(`${wrgb} luminance value should equal ${white_gs}`, () => {
         expect(wrgb.getLuminance()).toBeCloseTo(white_gs, 15)
     })
     const orange_gs = (1 * .299) + (.5 * .587) + (0 * .114)
-    const orgb = new RGB({"isInt": true, "vec": [255, 128, 0]})
+    const orgb = new RGB(255, 128, 0)
     test(`${orgb} luminance value should equal ${orange_gs}`, () => {
         expect(orgb.getLuminance()).toBeCloseTo(orange_gs, 2)
     })
 })
 
 describe("RGB to string and hex string", () => {
-    const r1 = new RGB({"isInt": true, "vec": [255, 0, 255]})
+    const r1 = new RGB(255, 0, 255)
     test("to string", () => {
         expect(r1.toString()).toEqual(`${RGB.type}: ${r1.vec}`)
     })

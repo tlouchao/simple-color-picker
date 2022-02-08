@@ -1,21 +1,21 @@
 import React, {useEffect, useState} from "react"
-import { MAX_UINT8 } from "common/constants"
 import * as canvas from "canvas/canvas"
-import {RGB, HSV} from "colorspace/colorspace"
-import Type from "colorspace/Type"
+import {MAX_DEG} from "common/constants"
+import {RGB, HSV, Type} from "colorspace/colorspace"
 
 const ColorPicker = () => {
     
-    const [currentColor, setCurrentColor] = useState(new RGB({"isInt": true, "vec": [0, 127, 0]}))
+    const [currentColor, setCurrentColor] = useState(new RGB(0, 127, 0))
 
     useEffect(() => {
-        let hsv = HSV.from(currentColor)
+        const hsv = HSV.from(currentColor)
         canvas.drawCanvasBg(hsv.vec)
         }, [currentColor])
 
     const handleChangeSlider = (event) => {
-        const hue = event.currentTarget.value
-        setCurrentColor(new RGB())
+        const hue = parseInt(event.target.value)
+        const hsv = new HSV(hue, 100, 50)
+        setCurrentColor(RGB.from(hsv))
     }
 
     // Render component
@@ -28,11 +28,17 @@ const ColorPicker = () => {
                     <canvas id='canvas' width='400' height='200'></canvas>
                 </div>
                 <div id='conversions-wrapper'>
-                    <div><input id='slider' type='range' min='0' max={MAX_UINT8} onChange={handleChangeSlider}></input></div>
-                    <div id='hex' className='txt-format'><h2>Hex</h2></div>
+                    <div><input id='slider' type='range' min='0' max={MAX_DEG} onChange={handleChangeSlider}></input></div>
+                    <div id='hex' className='txt-format'>
+                        <h2>Hex</h2>
+                        <p>todo</p>
+                        </div>
                     <div id='conversions'>
                         {Object.keys(Type).map(k => 
-                        <div id={k} key={"cv " + k}className='cvelem txt-format'><h2>{k}</h2></div>
+                            <div id={k} key={"cv " + k}className='cvelem txt-format'>
+                                <h2>{k}</h2>
+                                <p>todo</p>
+                            </div>
                         )}
                     </div>
                 </div>

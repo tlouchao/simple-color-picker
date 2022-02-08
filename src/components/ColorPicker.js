@@ -6,13 +6,17 @@ import Type from "colorspace/Type"
 
 const ColorPicker = () => {
     
-    // TODO: Support spread operator and array
     const [currentColor, setCurrentColor] = useState(new RGB({"isInt": true, "vec": [0, 127, 0]}))
 
     useEffect(() => {
         let hsv = HSV.from(currentColor)
-        canvas.drawCanvasBg(hsv.vec[0])
-        }, [])
+        canvas.drawCanvasBg(hsv.vec)
+        }, [currentColor])
+
+    const handleChangeSlider = (event) => {
+        const hue = event.currentTarget.value
+        setCurrentColor(new RGB())
+    }
 
     // Render component
     return (
@@ -24,7 +28,7 @@ const ColorPicker = () => {
                     <canvas id='canvas' width='400' height='200'></canvas>
                 </div>
                 <div id='conversions-wrapper'>
-                    <div><input id='slider' type='range' min='0' max={MAX_UINT8} onChange={(e) => console.log(e.currentTarget.value)}></input></div>
+                    <div><input id='slider' type='range' min='0' max={MAX_UINT8} onChange={handleChangeSlider}></input></div>
                     <div id='hex' className='txt-format'><h2>Hex</h2></div>
                     <div id='conversions'>
                         {Object.keys(Type).map(k => 

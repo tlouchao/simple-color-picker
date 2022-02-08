@@ -10,8 +10,8 @@ export const drawCanvasBg = (state) => {
     ctx.fillRect(0,0,canvas.width, canvas.height);
 
     const gradHue = ctx.createLinearGradient(0,0,canvas.width, 0)
-    gradHue.addColorStop(0, `hsla(${state}, 100%, 50%, 0)`)
-    gradHue.addColorStop(1, `hsla(${state}, 100%, 50%, 1)`)
+    gradHue.addColorStop(0, `hsla(${state[0]}, ${state[1]}%, ${state[2]}%, 0)`)
+    gradHue.addColorStop(1, `hsla(${state[0]}, ${state[1]}%, ${state[2]}%, 1)`)
 
     ctx.fillStyle = gradHue;
     ctx.globalCompositeOperation = "multiply";

@@ -30,74 +30,92 @@ class Base {
         return `${this.constructor.type}: ${this.vec}`
     }
 
-    _validateArgs(args){
+    _validateArgs(args){  
+        // Handle spread operator
+        if (args.length == this.constructor.maxlen) {
+            console.log(args)
+            try { return this._validateArgsInner(args, true) } catch (err) { throw (err) }
+        } else {
+            // Get nested argument
+            args = args[0]
 
-        // Check for object keys and length
-        if (!(("isInt" in args) && ("vec" in args) && (Object.keys(args).length == 2))){
-            throw(new TypeError("please provide a length 2 object with \"isInt\" and \"vec\" keys"))
+            // Handle array
+            if (args.length == this.constructor.maxlen) {
+                try { return this._validateArgsInner(args, true) } catch (err) { throw (err) }
+
+            // Handle key value pairs
+            } else if ("isInt" in args && "vec" in args && 
+                Object.keys(args).length == 2 && Array.isArray(args["vec"])){
+                try { return this._validateArgsInner(args["vec"], args["isInt"]) } catch (err) { throw (err) }
+
+            } else {
+                throw new TypeError("please provide a length 2 object with \"isInt\" and \"vec\" keys, " +
+                "or an integer array, or integer args")
+            }
         }
+    }
+
+    _validateArgsInner(arr, isInt){
+
+        const cstype = this.constructor.type
+        const maxlen = this.constructor.maxlen
+        const maxval = this.constructor.maxval
+        const maxdeg = this.constructor.maxdeg
+        const maxnm = this.constructor.maxnm
 
         // Check for empty vector
-        if (args["vec"] === undefined || args["vec"].length == 0){
+        if (arr.length == 0){
             return this.randomize()
-        
+
+        // Check for dimensions of vector
+        } else if (arr.length != maxlen){
+            throw(new RangeError(`${arr} please provide a vector with length ${maxlen}`))
+                
         } else {
-
-            const cstype = this.constructor.type
-            const maxlen = this.constructor.maxlen
-            const maxval = this.constructor.maxval
-            const maxdeg = this.constructor.maxdeg
-            const maxnm = this.constructor.maxnm
-
-            // Check for dimensions of vector
-            if (args["vec"].length != maxlen){
-                    throw(new RangeError(`please provide a vector with length ${maxlen}`))
-            }
-
             let res = []
             // Filter bad RGB/CMYK values
             if (cstype == Type.RGB || cstype == Type.CMYK) {
                 let filtered = []
-                if (args["isInt"]){
+                if (isInt){
                     // handle integer values
-                    filtered = args["vec"].filter(x => !(0 <= x && x <= maxval) || !(Number.isInteger(x)))
+                    filtered = arr.filter(x => !(0 <= x && x <= maxval) || !(Number.isInteger(x)))
                     if (!(filtered && filtered.length == 0)){
-                        throw(new TypeError(`${args["vec"]} does not contain integer(s) from 0-${maxval} inclusive`))
+                        throw(new TypeError(`${arr} does not contain integer(s) from 0-${maxval} inclusive`))
                     } else {
-                        res = args["vec"]
+                        res = arr
                     }
                 } else {
                     // handle normalized values
-                    filtered = args["vec"].filter(x => !(0 <= x && x <= maxnm))
+                    filtered = arr.filter(x => !(0 <= x && x <= maxnm))
                     if (!(filtered && filtered.length == 0)){
-                        throw(new TypeError(`${args["vec"]} does not contain normalized values from 0.0-${maxnm} inclusive`))
+                        throw(new TypeError(`${arr} does not contain normalized values from 0.0-${maxnm} inclusive`))
                     } else {
-                        res = Array.from(args["vec"].map(x => Math.round(x * maxval)))
+                        res = Array.from(arr.map(x => Math.round(x * maxval)))
                     }
                 }
 
             // Filter bad HSV/HSL values
             } else if (cstype == Type.HSV || cstype == Type.HSL) {
-                if (args["isInt"]){
+                if (isInt){
                     // handle integer values
-                    const [hue, sat, vb] = args["vec"]
+                    const [hue, sat, vb] = arr
                     if ((!(0 <= hue && hue <= maxdeg) || !(Number.isInteger(hue))) ||
                         (!(0 <= sat && sat <= maxval) || !(Number.isInteger(sat))) ||
                         (!(0 <= vb && vb <= maxval) || !(Number.isInteger(vb)))) {
-                        throw(new TypeError(`${args["vec"]} does not contain hue as an integer from 0-${maxdeg} inclusive, ` +
+                        throw(new TypeError(`${arr} does not contain hue as an integer from 0-${maxdeg} inclusive, ` +
                             `or saturation/value/brightness as an integer from 0-${maxval} inclusive`))
                     } else { // mixed array
-                        res = args["vec"] 
+                        res = arr
                     }
                 } else {
                     // handle normalized values
-                    const filtered = args["vec"].filter(x => !(0 <= x && x <= maxnm))
+                    const filtered = arr.filter(x => !(0 <= x && x <= maxnm))
                     if (!(filtered && filtered.length == 0)){
-                        throw(new TypeError(`${args["vec"]} does not contain normalized values from 0.0-${maxnm} inclusive`))
+                        throw(new TypeError(`${arr} does not contain normalized values from 0.0-${maxnm} inclusive`))
                     } else { // mixed array
-                        const hue = Math.round(args["vec"][0] * maxdeg)
-                        const sat = Math.round(args["vec"][1] * maxval)
-                        const vb = Math.round(args["vec"][2] * maxval)
+                        const hue = Math.round(arr[0] * maxdeg)
+                        const sat = Math.round(arr[1] * maxval)
+                        const vb = Math.round(arr[2] * maxval)
                         res = Array.from([hue, sat, vb])
                     }
                 }

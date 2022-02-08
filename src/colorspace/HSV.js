@@ -4,7 +4,7 @@ import Type from "./Type"
 
 class HSV extends Base {
     #vec
-    constructor(args) {
+    constructor(...args) {
         super(args)
     }
 
@@ -33,7 +33,7 @@ class HSV extends Base {
             hue = Math.round(hue)
             saturation = Math.round(((cmax == 0) ? 0 : (delta / cmax)) * HSV.maxval)
             value = Math.round(cmax * HSV.maxval)
-            return new HSV({"isInt": true, "vec": [hue, saturation, value]})
+            return new HSV({"vec": [hue, saturation, value], "isInt": true})
         } else {
             throw(new Error("not yet implemented"))
         }

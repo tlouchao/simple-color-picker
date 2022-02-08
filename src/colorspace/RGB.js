@@ -4,7 +4,7 @@ import Type from "./Type"
 
 class RGB extends Base {
     #vec
-    constructor(args) {
+    constructor(...args) {
         super(args)
     }
 

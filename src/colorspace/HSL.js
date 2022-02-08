@@ -4,7 +4,7 @@ import Type from "./Type"
 
 class HSL extends Base {
     #vec
-    constructor(args) {
+    constructor(...args) {
         super(args)
     }
 
@@ -35,7 +35,7 @@ class HSL extends Base {
             hue = Math.round(hue)
             lightness = Math.round(lightness * HSL.maxval)
             saturation = Math.round(saturation * HSL.maxval)
-            return new HSL({"isInt": true, "vec": [hue, saturation, lightness]})
+            return new HSL({"vec": [hue, saturation, lightness], "isInt": true})
         } else {
             throw(new Error("not yet implemented"))
         }

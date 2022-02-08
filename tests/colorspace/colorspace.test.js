@@ -19,7 +19,7 @@ describe("Do not instantiate abstract class Base", () => {
     })
 })
 
-describe("RGB and CMYK constructor valid params", () => {
+describe("RGB and CMYK constructor valid key value params", () => {
 
     const rvec = [255, 128, 0]
     const r1 = new RGB({"isInt": true, "vec": rvec})
@@ -53,7 +53,34 @@ describe("RGB and CMYK constructor valid params", () => {
     })
 })
 
-describe("HSV and HSL constructor valid params", () => {
+describe("RGB and CMYK constructor valid integer array params", () => {
+
+    const rvec = [255, 128, 0]
+    const r1 = new RGB(rvec)
+    const r2 = new RGB(rvec[0], rvec[1], rvec[2])
+
+    const cvec = [100, 0, 25, 75]
+    const c1 = new CMYK(cvec)
+    const c2 = new CMYK(cvec[0], cvec[1], cvec[2], cvec[3])
+
+    test(`RGB Array - Internal vec should be equal to ${rvec.toString()}`, () => {
+        expect(r1.vec).toEqual(rvec)
+    })
+    
+    test(`RGB Array Spread Op - Internal vec should be equal to ${rvec.toString()}`, () => {
+        expect(r2.vec).toEqual(rvec)
+    })
+    
+    test(`CMYK Array - Internal vec should be equal to ${cvec.toString()}`, () => {
+        expect(c1.vec).toEqual(cvec)
+    })
+
+    test(`CMYK Array Spread Op - Internal vec should be equal to ${cvec.toString()}`, () => {
+        expect(c2.vec).toEqual(cvec)
+    })
+})
+
+describe("HSV and HSL constructor valid key value params", () => {
 
     const vvec = [180, 75, 25]
     const v1 = new HSV({"isInt": true, "vec": vvec})
@@ -88,21 +115,48 @@ describe("HSV and HSL constructor valid params", () => {
     })
 })
 
+describe("HSV and HSL constructor valid integer array params", () => {
+
+    const vvec = [180, 75, 25]
+    const v1 = new HSV(vvec)
+    const v2 = new HSV(vvec[0], vvec[1], vvec[2])
+
+    const bvec = [360, 100, 50]
+    const b1 = new HSL(bvec)
+    const b2 = new HSL(bvec[0], bvec[1], bvec[2])
+
+    test(`HSV Array - Internal vec should be equal to ${vvec.toString()}`, () => {
+        expect(v1.vec).toEqual(vvec)
+    })
+
+    test(`HSV Array Spread Op - Internal vec should be equal to ${vvec.toString()}`, () => {
+        expect(v2.vec).toEqual(vvec)
+    })
+
+    test(`HSL Array - Internal vec should be equal to ${bvec.toString()}`, () => {
+        expect(b1.vec).toEqual(bvec)
+    })
+
+    test(`HSL Array Spread Op - Internal vec should be equal to ${bvec.toString()}`, () => {
+        expect(b2.vec).toEqual(bvec)
+    })
+})
+
 describe("RGB and CMYK constructor incorrect args object format", () => {
     
     test(`RGB Array`, () => {
         expect(() => new RGB({"isInt": true})).toThrow(TypeError)
         expect(() => new RGB({"foo": true, "bar":[1, 2, 3]})).toThrow(TypeError)
         expect(() => new RGB({"isInt": true, "bar": 0, "vec":[1, 2, 3]})).toThrow(
-            "please provide a length 2 object with \"isInt\" and \"vec\" keys"
+            "please provide a length 2 object with \"isInt\" and \"vec\" keys, or an integer array, or integer args"
         )
     })
 
     test(`CMYK Array`, () => {
-        expect(() => new RGB({"isInt": true})).toThrow(TypeError)
-        expect(() => new RGB({"foo": true, "bar":[1, 2, 3, 4]})).toThrow(TypeError)
-        expect(() => new RGB({"isInt": true, "bar": 0, "vec":[1, 2, 3, 4]})).toThrow(
-            "please provide a length 2 object with \"isInt\" and \"vec\" keys"
+        expect(() => new CMYK({"isInt": true})).toThrow(TypeError)
+        expect(() => new CMYK({"foo": true, "bar":[1, 2, 3, 4]})).toThrow(TypeError)
+        expect(() => new CMYK({"isInt": true, "bar": 0, "vec":[1, 2, 3, 4]})).toThrow(
+            "please provide a length 2 object with \"isInt\" and \"vec\" keys, or an integer array, or integer args"
         )
     })
 })
@@ -113,7 +167,7 @@ describe("HSV and HSL constructor incorrect args object format", () => {
         expect(() => new HSV({"isInt": true})).toThrow(TypeError)
         expect(() => new HSV({"foo": true, "bar":[1, 2, 3]})).toThrow(TypeError)
         expect(() => new HSV({"isInt": true, "bar": 0, "vec":[1, 2, 3]})).toThrow(
-            "please provide a length 2 object with \"isInt\" and \"vec\" keys"
+            "please provide a length 2 object with \"isInt\" and \"vec\" keys, or an integer array, or integer args"
         )
     })
 
@@ -121,7 +175,7 @@ describe("HSV and HSL constructor incorrect args object format", () => {
         expect(() => new HSL({"isInt": true})).toThrow(TypeError)
         expect(() => new HSL({"foo": true, "bar":[1, 2, 3]})).toThrow(TypeError)
         expect(() => new HSL({"isInt": true, "bar": 0, "vec":[1, 2, 3]})).toThrow(
-            "please provide a length 2 object with \"isInt\" and \"vec\" keys"
+            "please provide a length 2 object with \"isInt\" and \"vec\" keys, or an integer array, or integer args"
         )
     })
 })

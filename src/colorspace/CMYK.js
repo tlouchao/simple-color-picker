@@ -4,7 +4,7 @@ import Type from "./Type"
 
 class CMYK extends Base {
     #vec
-    constructor(args) {
+    constructor(...args) {
         super(args)
     }
 
@@ -21,7 +21,7 @@ class CMYK extends Base {
             const c = (1 - rnorm[0] - k) / (1 - k)
             const m = (1 - rnorm[1] - k) / (1 - k)
             const y = (1 - rnorm[2] - k) / (1 - k)
-            return new CMYK({"isInt": false, "vec": [c, m, y, k]})
+            return new CMYK({"vec": [c, m, y, k], "isInt": false})
         } else {
             throw(new Error("not yet implemented"))
         }

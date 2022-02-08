@@ -26,14 +26,18 @@ class Base {
 
     _validateArgs(args){  
 
-        // Handle spread operator
-        if (args.length == this.constructor.maxlen) {
-            try { return this._validateArgsInner(args, true) } catch (err) { throw (err) }
+        if (args.length != 1) {
 
-        } else if (args.length != 1) {
-            throw(new RangeError(`${args} please provide a vector with length ${this.constructor.maxlen}`))
-            
+            // Handle spread operator
+            if (args.length != this.constructor.maxlen) {
+                throw(new RangeError(`${args} please provide a vector with length ${this.constructor.maxlen}`))
+
+            } else {
+                try { return this._validateArgsInner(args, true) } catch (err) { throw (err) }
+            }
+
         } else {
+            
             // Get nested argument
             args = args[0]
 
@@ -48,7 +52,7 @@ class Base {
 
             } else {
                 throw new TypeError("please provide a length 2 object with \"isInt\" and \"vec\" keys, " +
-                "or an integer array, or integer args")
+                "or an integer array")
             }
         }
     }

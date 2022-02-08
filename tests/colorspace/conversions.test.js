@@ -70,7 +70,7 @@ describe("HSV conversion", () => {
     const green = new HSV(120, 100, 100)
     const purple = new HSV(300, 100, 50)
     const white = new HSV(0, 0, 100)
-    const black = new HSV(240, 0, 0)
+    const black = new HSV(240, 100, 0)
     test(`RGB from HSV 1`, () => {
         const rgb1 = RGB.from(green)
         expect(rgb1.vec).toEqual([0, 255, 0])
@@ -86,5 +86,30 @@ describe("HSV conversion", () => {
     test(`RGB from HSV black`, () => {
         const rgb4 = RGB.from(black)
         expect(rgb4.vec).toEqual([0, 0, 0])
+    })
+})
+
+describe("zero delta", () => {
+    const rgbz = new RGB(0, 0, 0)
+    test("HSV", () => {
+        expect(HSV.from(rgbz).vec).toEqual([0, 0, 0])
+    })
+    test("HSL", () => {
+        expect(HSL.from(rgbz).vec).toEqual([0, 0, 0])
+    })
+})
+
+describe("not implemented", () => {
+    test("RGB from CMYK", () => {
+        expect(() => RGB.from(new CMYK())).toThrow("not implemented")
+    })
+    test("HSL from CMYK", () => {
+        expect(() => HSL.from(new CMYK())).toThrow("not implemented")
+    })
+    test("HSV from CMYK", () => {
+        expect(() => HSV.from(new CMYK())).toThrow("not implemented")
+    })
+    test("CMYK from HSV", () => {
+        expect(() => CMYK.from(new HSV())).toThrow("not implemented")
     })
 })

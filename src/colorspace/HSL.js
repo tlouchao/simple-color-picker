@@ -12,12 +12,6 @@ class HSL extends Base {
     static get maxval(){ return MAX_PCT }
     static get maxdeg(){ return MAX_DEG }
 
-    toString() {
-        let hnorm = this.normalize()
-        hnorm = hnorm.map(x => Math.round(x * 100))
-        return `${this.vec[0]}\xB0, ${hnorm[1]}%, ${hnorm[2]}%`
-    }
-
     /* https://www.rapidtables.com/convert/color/rgb-to-hsl.html */
     static from(that){
         if (that instanceof Type['RGB']){
@@ -27,7 +21,7 @@ class HSL extends Base {
             const delta = cmax - cmin
             let hue, saturation, lightness
             if (delta == 0){
-                hue == 0
+                hue = 0
             } else if (cmax == rnorm[0]){
                 hue = (HSL.maxdeg / 6) * (((rnorm[1] - rnorm[2]) / delta) % 6)
             } else if (cmax == rnorm[1]){
@@ -44,8 +38,14 @@ class HSL extends Base {
             saturation = Math.round(saturation * HSL.maxval)
             return new HSL(hue, saturation, lightness)
         } else {
-            throw(new Error("not yet implemented"))
+            throw(new Error("not implemented"))
         }
+    }
+
+    toString() {
+        let hnorm = this.normalize()
+        hnorm = hnorm.map(x => Math.round(x * 100))
+        return `${this.vec[0]}\xB0, ${hnorm[1]}%, ${hnorm[2]}%`
     }
 }
 

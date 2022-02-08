@@ -12,10 +12,6 @@ class RGB extends Base {
     static get maxval(){ return MAX_UINT8 }
     static get maxdeg(){ return null }
 
-    toString() {
-        return `${this.vec[0]}, ${this.vec[1]}, ${this.vec[2]}`
-    }
-
     /*https://www.rapidtables.com/convert/color/hsl-to-rgb.html*/
     /*https://www.rapidtables.com/convert/color/hsv-to-rgb.html*/
     static from(that){
@@ -59,8 +55,12 @@ class RGB extends Base {
             const rgb = Array.from(rgbtmp, x => Math.round((x + m) * RGB.maxval))
             return new RGB(rgb)
         } else {
-            throw(new Error("not yet implemented"))
+            throw(new Error("not implemented"))
         }
+    }
+
+    toString() {
+        return `${this.vec[0]}, ${this.vec[1]}, ${this.vec[2]}`
     }
 
     toHexString(){

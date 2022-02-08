@@ -18,7 +18,6 @@ const ColorPicker = () => {
         setCurrentColor(RGB.from(hsv))
     }
 
-    // Render component
     return (
         <div id='color-picker-wrapper'>
             <div id='color-picker'>

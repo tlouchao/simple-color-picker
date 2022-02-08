@@ -1,6 +1,6 @@
+import * as constants from "common/constants"
 import { RGB, CMYK, HSV, HSL } from "colorspace/colorspace"
 import Base from "colorspace/Base"
-import * as constants from "common/constants"
 
 describe("Do not instantiate abstract class Base", () => {
 
@@ -146,7 +146,7 @@ describe("RGB and CMYK constructor incorrect args object format", () => {
         expect(() => new RGB({"isInt": true})).toThrow(TypeError)
         expect(() => new RGB({"foo": true, "bar":[1, 2, 3]})).toThrow(TypeError)
         expect(() => new RGB({"isInt": true, "bar": 0, "vec":[1, 2, 3]})).toThrow(
-            "please provide a length 2 object with \"isInt\" and \"vec\" keys, or an integer array, or integer args"
+            "please provide a length 2 object with \"isInt\" and \"vec\" keys, or an integer array"
         )
     })
 
@@ -154,7 +154,7 @@ describe("RGB and CMYK constructor incorrect args object format", () => {
         expect(() => new CMYK({"isInt": true})).toThrow(TypeError)
         expect(() => new CMYK({"foo": true, "bar":[1, 2, 3, 4]})).toThrow(TypeError)
         expect(() => new CMYK({"isInt": true, "bar": 0, "vec":[1, 2, 3, 4]})).toThrow(
-            "please provide a length 2 object with \"isInt\" and \"vec\" keys, or an integer array, or integer args"
+            "please provide a length 2 object with \"isInt\" and \"vec\" keys, or an integer array"
         )
     })
 })
@@ -165,7 +165,7 @@ describe("HSV and HSL constructor incorrect args object format", () => {
         expect(() => new HSV({"isInt": true})).toThrow(TypeError)
         expect(() => new HSV({"foo": true, "bar":[1, 2, 3]})).toThrow(TypeError)
         expect(() => new HSV({"isInt": true, "bar": 0, "vec":[1, 2, 3]})).toThrow(
-            "please provide a length 2 object with \"isInt\" and \"vec\" keys, or an integer array, or integer args"
+            "please provide a length 2 object with \"isInt\" and \"vec\" keys, or an integer array"
         )
     })
 
@@ -173,7 +173,7 @@ describe("HSV and HSL constructor incorrect args object format", () => {
         expect(() => new HSL({"isInt": true})).toThrow(TypeError)
         expect(() => new HSL({"foo": true, "bar":[1, 2, 3]})).toThrow(TypeError)
         expect(() => new HSL({"isInt": true, "bar": 0, "vec":[1, 2, 3]})).toThrow(
-            "please provide a length 2 object with \"isInt\" and \"vec\" keys, or an integer array, or integer args"
+            "please provide a length 2 object with \"isInt\" and \"vec\" keys, or an integer array"
         )
     })
 })

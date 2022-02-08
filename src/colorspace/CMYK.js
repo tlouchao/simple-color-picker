@@ -12,12 +12,6 @@ class CMYK extends Base {
     static get maxval(){ return MAX_PCT }
     static get maxdeg(){ return null }
 
-    toString() {
-        let cnorm = this.normalize()
-        cnorm = cnorm.map(x => Math.round(x * 100))
-        return `${cnorm[0]}%, ${cnorm[1]}%, ${cnorm[2]}%, ${cnorm[3]}%`
-    }
-
     /* https://www.rapidtables.com/convert/color/rgb-to-cmyk.html */
     static from(that){
         if (that instanceof Type['RGB']){
@@ -28,8 +22,14 @@ class CMYK extends Base {
             const y = (1 - rnorm[2] - k) / (1 - k)
             return new CMYK({"vec": [c, m, y, k], "isInt": false})
         } else {
-            throw(new Error("not yet implemented"))
+            throw(new Error("not implemented"))
         }
+    }
+
+    toString() {
+        let cnorm = this.normalize()
+        cnorm = cnorm.map(x => Math.round(x * 100))
+        return `${cnorm[0]}%, ${cnorm[1]}%, ${cnorm[2]}%, ${cnorm[3]}%`
     }
 }
 

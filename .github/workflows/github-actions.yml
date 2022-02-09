@@ -22,7 +22,3 @@ jobs:
         
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v2
-        with:
-          directory: ./tests/
-          files: ./lcov.info, ./coverage-final.json
-          flags: unittests

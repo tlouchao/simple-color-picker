@@ -8,6 +8,7 @@
 .DS_Store
 
 # jest
+codecov
 /tests/lcov-report
 /tests/clover.xml
 /tests/coverage-final.json

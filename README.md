@@ -18,4 +18,6 @@ npm run dev
 
 Tests are written in the Jest testing framework.
 
-`npm run test`
+```
+npm run test
+```

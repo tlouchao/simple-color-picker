@@ -1,5 +1,8 @@
 # Simple Color Picker
 
+[![codecov](https://codecov.io/gh/tlouchao/simple-color-picker/branch/master/graph/badge.svg?token=BE9DVAUCGS)](https://codecov.io/gh/tlouchao/simple-color-picker)
+![GitHub](https://img.shields.io/github/license/tlouchao/simple-color-picker)
+
 Project modeled after Google Chrome's default [color picker](https://www.google.com/search?q=color+picker).
 
 Check out the [demo](https://tlouchao.github.io/simple-color-picker/)!

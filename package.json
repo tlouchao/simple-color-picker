@@ -17,7 +17,7 @@
     "url": "git+https://github.com/tlouchao/simple-color-picker.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "dotenv": "^16.0.0",
     "react": "^17.0.2",

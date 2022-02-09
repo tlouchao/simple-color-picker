@@ -10,9 +10,9 @@ jobs:
         with:
           node-version: '16.x'
           run: npm install
-          run: npm run build
+      - run: npm run build
       - name: Generate Coverage Report
-          run: npm run test
+      - run: npm run test
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v2
         with:

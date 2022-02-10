@@ -1,16 +1,25 @@
-import React, {useEffect, useState} from "react"
-import * as canvas from "canvas/canvas"
+import React, {useEffect, useLayoutEffect, useState} from "react"
+import Canvas from "canvas/canvas"
 import {MAX_DEG} from "common/constants"
 import {RGB, HSV, Type} from "colorspace/colorspace"
 
 const ColorPicker = () => {
     
-    const [currentColor, setCurrentColor] = useState(new RGB(0, 127, 0))
+    const [canvas, setCanvas] = useState(null) // wait for DOM to render before accessing
+    const [currentColor, setCurrentColor] = useState(new RGB(127, 0, 0))
 
     useEffect(() => {
-        const hsv = HSV.from(currentColor)
-        canvas.drawCanvasBg(hsv.vec)
-        }, [currentColor])
+        if (canvas == null) {
+            setCanvas(new Canvas())
+        }
+    }, [])
+
+    useEffect(() => {
+        if (canvas != null){
+            const hsv = HSV.from(currentColor)
+            canvas.draw(hsv.vec)
+        }
+    }, [canvas, currentColor])
 
     const handleChangeSlider = (event) => {
         const hue = parseInt(event.target.value)

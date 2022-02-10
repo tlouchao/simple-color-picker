@@ -4,3 +4,4 @@ export const MAX_NM = 1.0
 export const MAX_UINT8 = 255
 export const MAX_PCT = 100
 export const MAX_DEG = 360
+export const CURSOR_RADIUS = 7.5

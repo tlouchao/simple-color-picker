@@ -4,50 +4,39 @@ import {RGB, HSV, HSL, Type} from "colorspace/colorspace"
 
 const ColorPicker = () => {
     
-    const [hue, setHue] = useState(0) // retain hue info if converted to greyscale
-    const [x, setX] = useState(0)
-    const [y, setY] = useState(0)
-    const [isDrawing, setIsDrawing] = useState(false)
-
-    const [currentColor, setCurrentColor] = useState(new RGB(127, 0, 0))
     const canvasRef = useRef(null)
+    const width = 400
+    const height = 200
 
-    /*
-    useEffect(() => {
-        window.addEventListener('onMouseUp', handleMouseUp)
-        return() => {
-            window.removeEventListener('onMouseUp', handleMouseUp)
-        }
-    })
-*/
+    const [hue, setHue] = useState(0)
+    const [x, setX] = useState(width)
+    const [y, setY] = useState(height / 2)
+    const [isDrawing, setIsDrawing] = useState(false)
+    const [currentColor, setCurrentColor] = useState(new RGB(127, 0, 0))
+
     useEffect(() => {
         if (canvasRef && canvasRef.current){draw()} 
     }, [hue, currentColor])
 
     const handleChangeSlider = (e) => {
-        // hue only modified w/ slider
-        setHue(parseInt(e.target.value))
+        const hueTmp = parseInt(e.target.value)
         const hsvTmp = HSV.from(currentColor)
-        const hsv = new HSV(hue, hsvTmp.vec[1], hsvTmp.vec[2])
+        const hsv = new HSV(parseInt(hueTmp), hsvTmp.vec[1], hsvTmp.vec[2])
+        setHue(parseInt(hueTmp))
         setCurrentColor(RGB.from(hsv))
     }
 
     // mouseevent handlers
     const handleMouseDown = (e) => {
-        setX(Math.min(400, Math.max(0, Math.round(e.clientX - canvasRef.current.getBoundingClientRect().left))))
-        setY(Math.min(200, Math.max(0, Math.round(e.clientY - canvasRef.current.getBoundingClientRect().top))))
+        setPosHelper(e)
         setIsDrawing(true)
     }
 
     const handleMouseMove = (e) => {
         if (isDrawing) {
-            setX(Math.min(400, Math.max(0, Math.round(e.clientX - canvasRef.current.getBoundingClientRect().left))))
-            setY(Math.min(200, Math.max(0, Math.round(e.clientY - canvasRef.current.getBoundingClientRect().top))))
-            console.log(x)
-            console.log(y)
+            setPosHelper(e)
             const ctx = canvasRef.current.getContext('2d')
             const arr = ctx.getImageData(x, y, 1, 1).data
-            console.log("Array: " + [arr[0], arr[1], arr[2]])
             setCurrentColor(new RGB(arr[0], arr[1], arr[2]))
         }
     }
@@ -56,12 +45,20 @@ const ColorPicker = () => {
         setIsDrawing(false)
     }
 
+    const setPosHelper = ( e) => {
+        if (canvasRef.current) {
+            setX(Math.min(width, Math.max(0, Math.round(
+                    e.clientX - canvasRef.current.getBoundingClientRect().left))))
+            setY(Math.min(height, Math.max(0, Math.round(
+                    e.clientY - canvasRef.current.getBoundingClientRect().top))))
+        }
+    }
+
     const draw = () => {
         if (canvasRef.current){
 
             const canvas = canvasRef.current
             const ctx = canvasRef.current.getContext('2d')
-
             const hsl = new HSL(hue, 100, 50)
 
             ctx.lineWidth = 2
@@ -105,9 +102,9 @@ const ColorPicker = () => {
         <div id='color-picker-wrapper'>
             <div id='color-picker'>
                 <div id='header'><h1>Color Picker</h1></div>
-                <div id='canvas-wrapper'>
-                    <div id='square' style={{'backgroundColor': currentColor.toHexString()}}></div>
-                    <canvas id='canvas' width='400' height='200' ref={canvasRef}
+                <div id='canvas-wrapper'> 
+                    <div key={'square-' + hue} id='square' style={{'backgroundColor': currentColor.toHexString()}}></div>
+                    <canvas id='canvas' width={width} height={height} ref={canvasRef}
                     onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}/>
                 </div>
                 <div id='conversions-wrapper'>

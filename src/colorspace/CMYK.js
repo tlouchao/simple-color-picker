@@ -17,9 +17,9 @@ class CMYK extends Base {
         if (that instanceof Type['RGB']){
             const rnorm = that.normalize()
             const k = 1 - Math.max(rnorm[0], rnorm[1], rnorm[2])
-            const c = (1 - rnorm[0] - k) / (1 - k)
-            const m = (1 - rnorm[1] - k) / (1 - k)
-            const y = (1 - rnorm[2] - k) / (1 - k)
+            const c = (k == 1) ? (1 - rnorm[0] - k) : (1 - rnorm[0] - k) / (1 - k)
+            const m = (k == 1) ? (1 - rnorm[1] - k) : (1 - rnorm[1] - k) / (1 - k)
+            const y = (k == 1) ? (1 - rnorm[2] - k) : (1 - rnorm[2] - k) / (1 - k)
             return new CMYK({"vec": [c, m, y, k], "isInt": false})
         } else {
             throw(new Error("not implemented"))

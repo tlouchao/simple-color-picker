@@ -32,7 +32,7 @@ class HSL extends Base {
                 throw(new Error(`unknown ${this.constructor.type} conversion error`))
             }
             lightness = ((cmax + cmin) / 2)
-            saturation = ((cmax == 0 || lightness == 0) ? 0 : (delta / (1 - Math.abs((2 * lightness) - 1))))
+            saturation = ((cmax == 0 || lightness == 1) ? 0 : (delta / (1 - Math.abs((2 * lightness) - 1))))
             hue = (hue >= 0) ? Math.round(hue) : Math.round(hue + HSL.maxdeg)
             lightness = Math.round(lightness * HSL.maxval)
             saturation = Math.round(saturation * HSL.maxval)

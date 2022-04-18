@@ -124,7 +124,7 @@ const ColorPicker = () => {
                     onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}/>
                 </div>
                 <div id='conversions-wrapper'>
-                    <div><input id='slider' type='range' min='0' max={MAX_DEG} onChange={handleChangeSlider}></input></div>
+                    <div><input id='slider' type='range' defaultValue='0' min='0' max={MAX_DEG} onChange={handleChangeSlider}></input></div>
                     <div id='hex' className='txt-format'>
                         <div id='hex-string'>
                             <h2>Hex</h2>

@@ -1,6 +1,9 @@
 import React, {useEffect, useState, useRef} from "react"
 import {MAX_DEG, CURSOR_RADIUS} from "common/constants"
 import {RGB, HSV, HSL, Type} from "colorspace/colorspace"
+import CopyIcon from "../static/imgs/copy-regular.svg"
+import CheckIcon from "../static/imgs/check-solid.svg"
+import SVG from 'react-inlinesvg'
 
 const ColorPicker = () => {
     
@@ -12,6 +15,7 @@ const ColorPicker = () => {
     const [x, setX] = useState(width)
     const [y, setY] = useState(height / 2)
     const [isDrawing, setIsDrawing] = useState(false)
+    const [isHexCopied, setIsHexCopied] = useState(false)
     const [currentColor, setCurrentColor] = useState(new RGB(127, 0, 0))
 
     useEffect(() => {
@@ -22,8 +26,17 @@ const ColorPicker = () => {
         const hueTmp = parseInt(e.target.value)
         const hsvTmp = HSV.from(currentColor)
         const hsv = new HSV(parseInt(hueTmp), hsvTmp.vec[1], hsvTmp.vec[2])
-        setHue(parseInt(hueTmp))
+        setHue(hueTmp)
         setCurrentColor(RGB.from(hsv))
+        if (isHexCopied){
+            setIsHexCopied(false)
+        }
+    }
+
+    const handleClickCopy = (e) => {
+        const copyText = e.target.dataset.val
+        navigator.clipboard.writeText(copyText)
+        setIsHexCopied(true)
     }
 
     // mouseevent handlers
@@ -38,6 +51,9 @@ const ColorPicker = () => {
             const ctx = canvasRef.current.getContext('2d')
             const arr = ctx.getImageData(x, y, 1, 1).data
             setCurrentColor(new RGB(arr[0], arr[1], arr[2]))
+            if (isHexCopied){
+                setIsHexCopied(false)
+            }
         }
     }
 
@@ -103,16 +119,21 @@ const ColorPicker = () => {
             <div id='color-picker'>
                 <div id='header'><h1>Color Picker</h1></div>
                 <div id='canvas-wrapper'> 
-                    <div key={'square-' + hue} id='square' style={{'backgroundColor': currentColor.toHexString()}}></div>
+                    <div id='square' style={{'backgroundColor': currentColor.toHexString()}}></div>
                     <canvas id='canvas' width={width} height={height} ref={canvasRef}
                     onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}/>
                 </div>
                 <div id='conversions-wrapper'>
                     <div><input id='slider' type='range' min='0' max={MAX_DEG} onChange={handleChangeSlider}></input></div>
                     <div id='hex' className='txt-format'>
-                        <h2>Hex</h2>
-                        <p>{currentColor.toHexString()}</p>
+                        <div id='hex-string'>
+                            <h2>Hex</h2>
+                            <p>{currentColor.toHexString()}</p>
                         </div>
+                        <div id='copy-icon' data-val={currentColor.toHexString()} onClick={handleClickCopy}>
+                            {isHexCopied ? <SVG src={CheckIcon}/> : <SVG src={CopyIcon}/> }
+                        </div>
+                    </div>
                     <div id='conversions'>
                         {Object.keys(Type).map(k => 
                             <div id={k} key={"cv " + k}className='cvelem txt-format'>

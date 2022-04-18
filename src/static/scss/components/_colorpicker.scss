@@ -62,11 +62,29 @@ $canvas-sqlen: 200px;
                 padding: calc($txtbox-padding / 2) $txtbox-padding;
                 @include border-group();
             }
-            #hex { 
+            #hex {
                 display: flex;
-                flex-direction: column;
+                flex-direction: row;
+                justify-content: flex-end;
+            }
+            #hex-string { 
+                margin-left: auto;
+                margin-right: auto;
                 h2 {
                     text-align: center;
+                }
+            }
+            #copy-icon {
+                margin-right: .25em;
+                align-self: center;
+                width: 16px;
+                height: 16px;
+                svg {
+                    pointer-events: none;
+                    fill: white;
+                }
+                &:hover {
+                    cursor: pointer;
                 }
             }
             #conversions {

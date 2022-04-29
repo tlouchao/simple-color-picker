@@ -39,13 +39,13 @@ const ColorPicker = () => {
         setIsHexCopied(true)
     }
 
-    // mouseevent handlers
-    const handleMouseDown = (e) => {
+    // mouseevent & touchevent handlers
+    const handleDown = (e) => {
         setPosHelper(e)
         setIsDrawing(true)
     }
 
-    const handleMouseMove = (e) => {
+    const handleMove = (e) => {
         if (isDrawing) {
             setPosHelper(e)
             const ctx = canvasRef.current.getContext('2d')
@@ -57,16 +57,27 @@ const ColorPicker = () => {
         }
     }
 
-    const handleMouseUp = (e) => {
+    const handleUp = (e) => {
         setIsDrawing(false)
     }
 
-    const setPosHelper = ( e) => {
+    const setPosHelper = (e) => {
         if (canvasRef.current) {
+            let tmpX;
+            let tmpY;
+            if (e.type == "touchstart" || e.type == "touchmove"){
+                tmpX = e.touches[0].clientX;
+                tmpY = e.touches[0].clientY;
+            } else if (e.type == "mousedown" || e.type == "mousemove") {
+                tmpX = e.clientX;
+                tmpY = e.clientY;
+            } else {
+                console.log("Undefined event: " + e)
+            }
             setX(Math.min(width, Math.max(0, Math.round(
-                    e.clientX - canvasRef.current.getBoundingClientRect().left))))
+                tmpX - canvasRef.current.getBoundingClientRect().left))))
             setY(Math.min(height, Math.max(0, Math.round(
-                    e.clientY - canvasRef.current.getBoundingClientRect().top))))
+                tmpY - canvasRef.current.getBoundingClientRect().top))))
         }
     }
 
@@ -121,7 +132,8 @@ const ColorPicker = () => {
                 <div id='canvas-wrapper'> 
                     <div id='square' style={{'backgroundColor': currentColor.toHexString()}}></div>
                     <canvas id='canvas' width={width} height={height} ref={canvasRef}
-                    onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}/>
+                    onMouseDown={handleDown} onMouseMove={handleMove} onMouseUp={handleUp}
+                    onTouchStart={handleDown} onTouchMove={handleMove} onTouchEnd={handleUp}/>
                 </div>
                 <div id='conversions-wrapper'>
                     <div><input id='slider' type='range' defaultValue='0' min='0' max={MAX_DEG} onChange={handleChangeSlider}></input></div>

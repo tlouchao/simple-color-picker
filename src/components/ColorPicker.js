@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useRef} from "react"
-import {MAX_DEG, CURSOR_RADIUS} from "common/constants"
-import {RGB, HSV, HSL, Type} from "colorspace/colorspace"
+import {MAX_DEG, CURSOR_RADIUS} from "../common/constants"
+import {RGB, HSV, HSL, Type} from "../colorspace/colorspace"
 import CopyIcon from "../static/imgs/copy-regular.svg"
 import CheckIcon from "../static/imgs/check-solid.svg"
 import SVG from 'react-inlinesvg'

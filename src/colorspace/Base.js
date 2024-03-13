@@ -1,4 +1,4 @@
-import { MAX_NM } from 'common/constants'
+import { MAX_NM } from '../common/constants'
 import { Type } from './colorspace'
 
 class Base {

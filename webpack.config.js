@@ -17,11 +17,6 @@ devServer: {
   port: 3000
 },
 resolve: {
-  alias: {
-    canvas: path.resolve(__dirname, '/src/canvas'),
-    common: path.resolve(__dirname, '/src/common'),
-    colorspace: path.resolve(__dirname, '/src/colorspace')
-  },
   extensions: ['.js', 'jsx', 'sass', 'scss']
 },
 module: {

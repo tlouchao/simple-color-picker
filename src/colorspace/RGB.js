@@ -1,4 +1,4 @@
-import { VEC3_LEN, MAX_UINT8 } from "common/constants"
+import { VEC3_LEN, MAX_UINT8 } from "../common/constants"
 import { Type } from "./colorspace"
 import Base from "./Base"
 

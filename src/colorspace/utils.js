@@ -1,4 +1,4 @@
-import {VEC3_LEN, MAX_UINT8} from "common/constants"
+import {VEC3_LEN, MAX_UINT8} from "../common/constants"
 
 export const randomVec3Normalized = () => {
     const vec3 = Float64Array.from({length: VEC3_LEN}, () => Math.random());

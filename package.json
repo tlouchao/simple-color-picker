@@ -1,6 +1,6 @@
 {
   "name": "simple-color-picker",
-  "homepage": "https://tlouchao.github.io/simple-color-picker/",
+  "homepage": "https://tlouchao-color-picker.netlify.app/",
   "version": "1.0.0",
   "description": "Simple Color Picker",
   "main": "index.js",

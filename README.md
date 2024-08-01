@@ -5,7 +5,7 @@
 
 Project modeled after Google Chrome's default [color picker](https://www.google.com/search?q=color+picker).
 
-Check out the [demo](https://tlouchao.github.io/simple-color-picker/):
+Check out the [demo](https://tlouchao-color-picker.netlify.app/):
 
 <img src="https://i.imgur.com/FWhnvDC.png" alt="Color Picker Screenshot" width=600 height=400 />
 
